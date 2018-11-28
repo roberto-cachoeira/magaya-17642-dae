@@ -1,0 +1,18 @@
+{
+  "name": "magaya-17642-dae",
+  "version": "0.0.1",
+  "description": "Custom Extension to store DAE number of shippers",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm link @magaya/hyperion-express-middleware",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "magaya",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "commander": "^2.17.1",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {}
+}

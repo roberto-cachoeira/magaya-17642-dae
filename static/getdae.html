@@ -1,0 +1,97 @@
+<html>
+
+<head>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+    <link href="css/commons.css" rel="stylesheet">
+    <link href="css/ascroll.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav id="navigationbar" class="navbar  navbar-inverse bg-primary sharp blue-bg" style="height:40px;">
+        <div class="container-fluid">
+
+            <div class="navbar-brand" style="color: white; width: 250px; height: 40px; top: 0px;">
+                <!--<div class="maple-leaf-small maple-leaf-white" style="float: left;"></div>/-->
+                <div style="float: center; padding-top: 2px; padding-left: 10px;">Get DAE </div>
+            </div>
+
+    </nav>
+    <div id="contentclose" class="container-fluid " style=" padding-right: 13px;">
+
+        <div id="divcenter">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <div class="row">
+                            <div class=" col-sm-6">
+                                <div>
+                                    <h6>Shipper</h6>
+                                    <h2 id="divShipper"></h2>
+                                </div>
+                            </div>
+                            <div class=" col-sm-6">
+                                <div>
+                                    <h6>Destination</h6>
+                                    <h2 id="divDestination"></h2>
+                                </div>
+                            </div>
+                            <div class=" col-sm-6">
+                                <div>
+                                    <h6>DAE</h6>
+                                    <h2 id="divDae">
+                                        <div class='col-sm-6'>
+                                            <input type='text' class="form-control" id='daeTextField' />
+                                        </div>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class=" col-sm-6">
+                                <div>
+                                    <h6>Expiration Date</h6>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class='col-sm-6'>
+                                                <input class="form-control" id=Expdate placeholder="MM/DD/YYYY" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 ">
+                            <div class=" col-sm-12">
+                                <button id="btgetDae" type="button" class="btn btn-primary">Get this DAE</button>
+                                <button id="btUpdate" type="button" class="btn btn-info">Update DAE</button>
+                                <button id="btCancel" type="button" class="btn btn-danger invisible">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+    </div>
+
+
+</body>
+<script src="js/jquery-3.2.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/shipment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+
+</html>

@@ -1,0 +1,38 @@
+{
+	"id": {
+		"company": "magaya",
+		"name": "17642-dae"
+	},
+	"version": "0.0.1",
+	"minimumMagayaVersion": "11.0.3",
+	"type": "httpServer",
+	"license": "MIT",
+	"install": {
+		"engine": "node",
+		"manager": "npm",
+		"name": "magaya-17642-dae"
+	},
+	"launch": {
+		"engine": "pm2",
+		"cluster": true,
+		"main": "./index.js"
+	},
+	"interface": {
+		"title": "DAE",
+		"sections": {
+			"shipment": {
+				"menuEntries": [
+					{
+						"category": "Actions",
+						"title": "Get DAE",
+						"selection": "single",
+						"type": "url",
+						"method": "GET",
+						"path": "/getdae.html?sh={operation-guid}",
+						"pathType": "cs-relative"
+					}
+				]
+			}
+		}
+	}
+}
