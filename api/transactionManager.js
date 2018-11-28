@@ -1,3 +1,7 @@
+const util = require('util');
+const fs = require('fs');
+const path = require('path');
+const fsReadFile = util.promisify(fs.readFile);
 module.exports = {
     sendFileSFTP: async function (filePath, fileName) {
             const BASIC_URL = '/operaciones@gnseas.com';
@@ -119,6 +123,67 @@ module.exports = {
             // once the search is complete, return the proper result
             return transformShip(shipObj);
         },
+        postConfig: async function (data, dbx, algorithm,fs,filePath) {
+            console.log(data);
+            let rawdata = await fsReadFile(path+ '/config.json'); 
+            if(rawdata != null){
+                let config = JSON.parse(rawdata);  
+                config.push(data)
+                let dataToSave = JSON.stringify(config, null, 2)
+                await fs.writeFile(filePath + '/config.json', dataToSave,async (err) => {
+                    // throws an error, you could also catch it here
+                    if (err) {
+                        console.log('ERROR!');
+                        return false;
+                    }
+                    // success case, the file was saved
+                    console.log('File saved!');
+                    return true;
+                });
+            }
+            else{
+                let dataToSave = JSON.stringify(data, null, 2)
+                await fs.writeFile(filePath + '/config.json', dataToSave,async (err) => {
+                    // throws an error, you could also catch it here
+                    if (err) {
+                        console.log('ERROR!');
+                        return false;
+                    }
+                    // success case, the file was saved
+                    console.log('File saved!');
+                    return true;
+                });
+            }
+                
+                    
+        },
+    
+        getConfiguration: async function (shipper,destination,path) {
+            
+            let rawdata = await fsReadFile(path+ '/config.json'); 
+            if(rawdata != null){
+                let config = JSON.parse(rawdata);  
+                var result = "";
+                for (i in config) {
+                   if(config[i].shipperName == shipper && destination == config[i].destinationCountry)
+                   {
+                    var d = new Date();
+                    var expdate = new Date(config[i].expDate)
+                    if(d>expdate)
+                    result= config[i];
+                   }
+                    
+                }
+                console.log(result);
+                return result;
+            }
+            else
+            {
+                return {
+                    response:"error"
+                }
+            }
+        },
 };
 
 function transformShip(shipObj) {
@@ -132,7 +197,8 @@ function transformShip(shipObj) {
         ShipperName:shipObj.ShipperName!= null?shipObj.ShipperName:"",
         DestinationPort:shipObj.DestinationPort!= null ?{
             Name:shipObj.DestinationPort.Name,
-            Code:shipObj.DestinationPort.Code
+            Code:shipObj.DestinationPort.Code,
+            Country:shipObj.DestinationPort.Country.Name
         }:"",
         
     };

@@ -10,79 +10,67 @@
 
 </head>
 
-<body>
-    <nav id="navigationbar" class="navbar  navbar-inverse bg-primary sharp blue-bg" style="height:40px;">
+<body class="bg-light">
+    <nav id="navigationbar" class="navbar  navbar-inverse bg-primary sharp gray" style="height:40px;">
         <div class="container-fluid">
 
             <div class="navbar-brand" style="color: white; width: 250px; height: 40px; top: 0px;">
                 <!--<div class="maple-leaf-small maple-leaf-white" style="float: left;"></div>/-->
-                <div style="float: center; padding-top: 2px; padding-left: 10px;">Get DAE </div>
+                <div style="float: center; padding-top: 2px; padding-left: 10px;">DAE</div>
             </div>
 
     </nav>
-    <div id="contentclose" class="container-fluid " style=" padding-right: 13px;">
-
-        <div id="divcenter">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12 ">
-                        <div class="row">
-                            <div class=" col-sm-6">
-                                <div>
-                                    <h6>Shipper</h6>
-                                    <h2 id="divShipper"></h2>
-                                </div>
-                            </div>
-                            <div class=" col-sm-6">
-                                <div>
-                                    <h6>Destination</h6>
-                                    <h2 id="divDestination"></h2>
-                                </div>
-                            </div>
-                            <div class=" col-sm-6">
-                                <div>
-                                    <h6>DAE</h6>
-                                    <h2 id="divDae">
-                                        <div class='col-sm-6'>
-                                            <input type='text' class="form-control" id='daeTextField' />
-                                        </div>
-                                    </h2>
-                                </div>
-                            </div>
-                            <div class=" col-sm-6">
-                                <div>
-                                    <h6>Expiration Date</h6>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class='col-sm-6'>
-                                                <input class="form-control" id=Expdate placeholder="MM/DD/YYYY" type="text" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+     <div class="container" >
+        <div class="d-flex justify-content-center">
+            <h2>Get DAE for shipment</h2></div>
+            <div class="d-flex justify-content-center">
+            <p class="lead d-flex align-items-start">This page will validate the current DAE based on the expiration date.</p></div>
+            <div class="d-flex justify-content-center">
+            <p class="lead d-flex align-items-start">If it's not valid the fields will be empty and you will need to enter a new DAE.</p></div>
+        </div>
+        <hr class="mb-4">
+        <div class="d-flex justify-content-center">
+            
+            <form class="needs-validation" action="response.html" novalidate>
+                <div class="row ">
+                    <div class="col-md-8 mb-3">
+                            <small class="text-muted">Shipper</small>
+                            <h6 class="my-0" id="divShipper"></h6>
+                        
+                    </div>
+                    <div class="col-md-8 mb-3">
+                            <small class="text-muted">Destination Country</small>
+                            <h6 class="my-0" id="divDestination"></h6>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <div class="mb-3">
+                    <label for="daeTextField">DAE</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="daeTextField" placeholder="DAE Number" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            DAE is required
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12 ">
-                            <div class=" col-sm-12">
-                                <button id="btgetDae" type="button" class="btn btn-primary">Get this DAE</button>
-                                <button id="btUpdate" type="button" class="btn btn-info">Update DAE</button>
-                                <button id="btCancel" type="button" class="btn btn-danger invisible">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
+                <div class="mb-3">
+                    <label for="expDate">Expiration Date </label>
+                    <input type="text" class="form-control" id="expDate" placeholder="MM/DD/YYYY" required >
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Expiration date is required
+                    </div>
+                </div>
 
-
-            </div>
-
-
+                <hr class="mb-4">
+               
+                <button id="btgetDae" type="button" class="btn btn-primary btn-lg btn-block">Get this DAE</button>
+                <button id="btUpdate" type="button" class="btn btn-info btn-lg btn-block">Update DAE</button>
+                <button id="btCancel" type="button" class="btn btn-danger btn-lg btn-block invisible">Cancel</button>
+            </form>
         </div>
     </div>
+   
 
     </div>
 

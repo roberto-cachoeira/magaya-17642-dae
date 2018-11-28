@@ -76,6 +76,21 @@ app.post(`${program.root}/transactionManager/:guid/customfields`, async (request
     // send the response to the browser
     response.json(result);
 });
+
+app.get(`${program.root}/getConfig/:shipper/:destination`, async (request, response) => {
+    console.log("starting");
+    const result = await ship.getConfiguration(request.params.shipper,request.params.destination,path.join(__dirname, 'static/json'));
+    // send the response to the browser
+    console.log("Finishing");
+    response.json(result);
+    
+})
+
+app.post(`${program.root}/saveConfig`, async (request, response) =>{
+    const result = await ship.postConfig(request.body, request.dbx, request.algorithm,fs,path.join(__dirname, 'static/json'));
+    response.json(result);
+});
+
 // start your application in the port specified
 app.listen(program.port, () => {
     console.log(`Server started on port ${program.port}...`);
