@@ -87,7 +87,7 @@ app.get(`${program.root}/getConfig/:shipper/:destination`, async (request, respo
 })
 
 app.post(`${program.root}/saveConfig`, async (request, response) =>{
-    const result = await ship.postConfig(request.body, request.dbx, request.algorithm,fs,path.join(__dirname, 'static/json'));
+    const result = await ship.postConfig(request.body, request.dbx, request.algorithm,path.join(__dirname, 'static/json'));
     response.json(result);
 });
 

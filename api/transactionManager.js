@@ -123,11 +123,11 @@ module.exports = {
             // once the search is complete, return the proper result
             return transformShip(shipObj);
         },
-        postConfig: async function (data, dbx, algorithm,fs,filePath) {
+        postConfig: async function (data, dbx, algorithm,filePath) {
             console.log(data);
-            let rawdata = await fsReadFile(path+ '/config.json'); 
+            let rawdata = await fsReadFile(filePath+ '/config.json'); 
             if(rawdata != null){
-                let config = JSON.parse(rawdata);  
+                let config = JSON.parse(rawdata);   
                 config.push(data)
                 let dataToSave = JSON.stringify(config, null, 2)
                 await fs.writeFile(filePath + '/config.json', dataToSave,async (err) => {
@@ -169,7 +169,7 @@ module.exports = {
                    {
                     var d = new Date();
                     var expdate = new Date(config[i].expDate)
-                    if(d>expdate)
+                    if(d<expdate)
                     result= config[i];
                    }
                     
