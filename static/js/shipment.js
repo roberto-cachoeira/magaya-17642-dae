@@ -96,7 +96,7 @@ function subMitValueMagaya() {
                 return;
             }
 
-            alert('Custom Field saved successfully!');
+            alert('Custom Field saved successfully!\n You may close this window');
             //cfInput.value = '';
             //cfInput.focus();
         })

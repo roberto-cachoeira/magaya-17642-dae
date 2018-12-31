@@ -1,5 +1,5 @@
 {
-    "args": "-p 64497 -r /ext/magaya/17642-dae -s Magaya_CS_Default -g --network-id=26746 --connection-string=WATERFALL:6110",
+    "args": "-p 56770 -r /ext/magaya/17642-dae -s Magaya_CS_Default -g --network-id=26746 --connection-string=WATERFALL:6110",
     "exec_mode": "cluster",
     "instances": 1,
     "name": "Magaya_CS_Default.magaya.17642-dae",
