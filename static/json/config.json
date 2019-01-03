@@ -52,5 +52,17 @@
     "shipperName": "Apple",
     "destinationCountry": "Brazil",
     "expDate": "01/31/2019"
+  },
+  {
+    "dae": "8878",
+    "shipperName": "Apple",
+    "destinationCountry": "Brazil",
+    "expDate": "01/31/2019"
+  },
+  {
+    "dae": "0986",
+    "shipperName": "ShipperAirSeaOne",
+    "destinationCountry": "United States",
+    "expDate": "02/02/2019"
   }
 ]
