@@ -36,7 +36,8 @@ if (!program.port) {
 const hyperion = hyperionMiddleware.hyperion(process.argv,'');
 
 // setup the extension with required data, notice this occurs at the application startup, not thru a web request
-setup.createCustomFieldDefinitions(hyperion);
+setup.createCustomFieldDefinitions(hyperion,'dae_info', 'DAE', 'Not Assigned');
+setup.createCustomFieldDefinitions(hyperion,'mrn_number', 'MRN Number', 'Not Assigned');
 
 // apply the middleware in the application
 app.use(middleware);
@@ -71,6 +72,12 @@ app.get(`${program.root}/transactionManager/saveCF/`, async (request, response) 
     response.send('Success Saved!! ');
 });
 
+app.get(`${program.root}/transactionManager/:guid/mrn`, async (request, response) => {
+    const result = await ship.calculateMrn(request.params.guid,  request.dbx, request.dbw, request.algorithm);
+    // send the response to the browser
+    response.send('Success Saved!! ');
+});
+
 app.post(`${program.root}/transactionManager/:guid/customfields`, async (request, response) => {
     const result = await ship.saveCustomFields(request.params.guid, request.body, request.dbx, request.dbw, request.algorithm);
     // send the response to the browser
@@ -84,7 +91,9 @@ app.get(`${program.root}/getConfig/:shipper/:destination`, async (request, respo
     console.log("Finishing");
     response.json(result);
     
-})
+});
+
+
 
 app.post(`${program.root}/saveConfig`, async (request, response) =>{
     const result = await ship.postConfig(request.body, request.dbx, request.algorithm,path.join(__dirname, 'static/json'));

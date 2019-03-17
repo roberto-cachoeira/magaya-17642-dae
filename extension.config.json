@@ -30,6 +30,15 @@
 						"method": "GET",
 						"path": "/getdae.html?sh={operation-guid}",
 						"pathType": "cs-relative"
+					},
+					{
+						"category": "Actions",
+						"title": "Get MRN",
+						"selection": "single",
+						"type": "url",
+						"method": "GET",
+						"path": "/transactionManager/{operation-guid}/mrn",
+						"pathType": "cs-relative"
 					}
 				]
 			}

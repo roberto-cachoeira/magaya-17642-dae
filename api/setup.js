@@ -1,7 +1,7 @@
 module.exports = {
-    createCustomFieldDefinitions : async (hyperion) => {
+    createCustomFieldDefinitions : async (hyperion,internalName,DisplayName, DefaultValue) => {
         try {
-            const internalName = 'dae_info';
+            //const internalName = internalName;
             // object type the supports custom fields in Magaya
             const objectType = hyperion.dbx.Common.DbClassType.Shipment;
             // obtain the current list of custom fields for that type
@@ -21,13 +21,13 @@ module.exports = {
             newCustomFieldDef.Type = hyperion.dbx.CustomField.Definition.DataType.String;
             newCustomFieldDef.ObjectType = objectType;
             newCustomFieldDef.InternalName = internalName;
-            newCustomFieldDef.DisplayName = 'DAE';
+            newCustomFieldDef.DisplayName = DisplayName;
             // can only be written from API
             newCustomFieldDef.IsReadOnly = true;
 
             newCustomFieldDef.IsInternal = false;
             newCustomFieldDef.IsSystemDateTime = false;
-            newCustomFieldDef.DefaultValue = "Not Assigned";
+            newCustomFieldDef.DefaultValue = DefaultValue;
 
             // Call this method to persist the object in the database, otherwise it won't be saved
             hyperion.dbx.save(newCustomFieldDef); 
@@ -35,5 +35,7 @@ module.exports = {
         catch (ex) { 
             console.log(ex);
         }
+
+        
     }
 };

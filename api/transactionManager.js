@@ -123,6 +123,20 @@ module.exports = {
             // once the search is complete, return the proper result
             return transformShip(shipObj);
         },
+        calculateMrn : async function(shipGuid, dbx, dbw, algorithm) {
+            let shipObj = await this.findShip(shipGuid, dbx, algorithm);
+            let manifest_number = shipObj.CustomFields.manifest_number;
+            let contador = 0;
+            if(shipObj.Houses.Count >0 )
+            {
+                dbx.using(shipObj.Houses)
+				.iterate(function (house) {
+
+                });
+            }
+            // once the search is complete, return the proper result
+            //return transformShip(shipObj);
+        },
         postConfig: async function (data, dbx, algorithm,filePath) {
             console.log(data);
             let rawdata = await fsReadFile(filePath+ '/config.json'); 
