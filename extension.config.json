@@ -38,7 +38,16 @@
 						"type": "url",
 						"method": "GET",
 						"path": "/transactionManager/{operation-guid}/mrn",
-						"pathType": "cs-relative"
+						"pathType": "cs-relative",
+						"filter" : {
+							"type" : "fixed",
+							"direction" : "Both",
+							"layout" : "Master",
+							"methods" : [
+								"Air",
+								"Ocean"
+							]
+						}
 					}
 				]
 			}
