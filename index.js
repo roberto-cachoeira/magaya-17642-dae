@@ -5,7 +5,7 @@ const packageJson = require('./package.json');
 const hyperionMiddleware = require('@magaya/hyperion-express-middleware');
 // create the hyperion middleware for express.js, pass the required arguments to connect to the database
 // the second parameter is optional, if you specify it it will include specialized APIs like the one for LiveTrack Mobile (ltm)
-const middleware = hyperionMiddleware.middleware(process.argv,'');
+const middleware = hyperionMiddleware.middleware(process.argv,'17642-dae');
 // require the express framework and create an instance of it
 const express = require('express');
 const app = express();
@@ -15,6 +15,7 @@ const path = require('path');
 const bodyParser = require("body-parser");
 // require our setup helper functions
 const setup = require(path.join(__dirname, 'api/setup'));
+const configuration = require(path.join(__dirname, 'api/configuration'));
 
 program.version(packageJson.version)
     .option('-p, --port <n>', 'running port', parseInt)
@@ -33,7 +34,7 @@ if (!program.port) {
     process.exit(1);
 }
 
-const hyperion = hyperionMiddleware.hyperion(process.argv,'');
+const hyperion = hyperionMiddleware.hyperion(process.argv,'17642-dae');
 
 // setup the extension with required data, notice this occurs at the application startup, not thru a web request
 setup.createCustomFieldDefinitions(hyperion,'dae_info', 'DAE', 'Not Assigned');
@@ -66,6 +67,22 @@ app.get(`${program.root}/transactionManager/:guid`, async (request, response) =>
     
 });
 
+
+app.get(`${program.root}/getConfig`, async (request, response) => {
+    //const result = await ship.getConfiguration(path.join(__dirname, 'static/assets/auxData'));
+    
+    // send the response to the browser
+    response.json(await configuration.getConfig());
+    
+})
+
+app.post(`${program.root}/transactionManager/saveConfig`, async (request, response) =>{
+    //const result = await ship.postConfig(request.body, request.dbx, request.algorithm,fs,path.join(__dirname, 'static/assets/auxData'));
+    const result =await configuration.saveConfig(request.body);
+    response.json({"result":result});  
+});
+
+
 app.get(`${program.root}/transactionManager/saveCF/`, async (request, response) => {
     const result = await ship.saveCustomFields(request.params.BLNumber, "SUCESS v2", request.dbx, request.dbw, request.algorithm);
     // send the response to the browser
@@ -85,7 +102,9 @@ app.post(`${program.root}/transactionManager/:guid/customfields`, async (request
 });
 
 app.get(`${program.root}/getConfig/:shipper/:destination`, async (request, response) => {
-    console.log("starting");
+    console.log("DAE");
+    console.log("Shipper: " + request.params.shipper);
+    console.log("Destination: " + request.params.destination);
     const result = await ship.getConfiguration(request.params.shipper,request.params.destination,path.join(__dirname, 'static/json'));
     // send the response to the browser
     console.log("Finishing");

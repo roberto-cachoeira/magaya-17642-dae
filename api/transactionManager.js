@@ -2,6 +2,9 @@ const util = require('util');
 const fs = require('fs');
 const path = require('path');
 const fsReadFile = util.promisify(fs.readFile);
+const configuration = require(path.join(__dirname, './configuration'));
+const hyperion = require('@magaya/hyperion-express-middleware').hyperion(process.argv, '17642-dae');
+const networkID = hyperion.dbx ? `${hyperion.dbx.Company.NetworkID}` : 0;
 module.exports = {
     sendFileSFTP: async function (filePath, fileName) {
         const BASIC_URL = '/operaciones@gnseas.com';
@@ -208,34 +211,36 @@ module.exports = {
     },
     postConfig: async function (data, dbx, algorithm, filePath) {
         console.log(data);
-        let rawdata = await fsReadFile(filePath + '/config.json');
+        let rawdata = await configuration.getConfig();
         if (rawdata != null) {
-            let config = JSON.parse(rawdata);
+            let config =rawdata;
             config.push(data)
-            let dataToSave = JSON.stringify(config, null, 2)
-            await fs.writeFile(filePath + '/config.json', dataToSave, async (err) => {
-                // throws an error, you could also catch it here
-                if (err) {
-                    console.log('ERROR!');
-                    return false;
-                }
-                // success case, the file was saved
-                console.log('File saved!');
-                return true;
-            });
+            let dataToSave = JSON.stringify(config, null, 2);
+            await configuration.saveConfig(dataToSave);
+            // await fs.writeFile(filePath + '/config.json', dataToSave, async (err) => {
+            //     // throws an error, you could also catch it here
+            //     if (err) {
+            //         console.log('ERROR!');
+            //         return false;
+            //     }
+            //     // success case, the file was saved
+            //     console.log('File saved!');
+            //     return true;
+            // });
         }
         else {
-            let dataToSave = JSON.stringify(data, null, 2)
-            await fs.writeFile(filePath + '/config.json', dataToSave, async (err) => {
-                // throws an error, you could also catch it here
-                if (err) {
-                    console.log('ERROR!');
-                    return false;
-                }
-                // success case, the file was saved
-                console.log('File saved!');
-                return true;
-            });
+            let dataToSave = JSON.stringify(data, null, 2);
+            await configuration.saveConfig(dataToSave);
+            // await fs.writeFile(filePath + '/config.json', dataToSave, async (err) => {
+            //     // throws an error, you could also catch it here
+            //     if (err) {
+            //         console.log('ERROR!');
+            //         return false;
+            //     }
+            //     // success case, the file was saved
+            //     console.log('File saved!');
+            //     return true;
+            // });
         }
 
 
@@ -243,16 +248,18 @@ module.exports = {
 
     getConfiguration: async function (shipper, destination, path) {
 
-        let rawdata = await fsReadFile(path + '/config.json');
+        //let rawdata = await fsReadFile(path + '/config.json');
+        let rawdata = await configuration.getConfig();
         if (rawdata != null) {
             let config = JSON.parse(rawdata);
             var result = "";
             for (i in config) {
-                if (config[i].shipperName == shipper && destination == config[i].destinationCountry) {
+                var curObj = config[i];
+                if (curObj.shipperName == shipper && destination == curObj.destinationCountry) {
                     var d = new Date();
-                    var expdate = new Date(config[i].expDate)
+                    var expdate = new Date(curObj.expDate)
                     if (d < expdate)
-                        result = config[i];
+                        result = curObj;
                 }
 
             }

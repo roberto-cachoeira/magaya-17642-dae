@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}\\index.js",
             "args": [
-                "--root", "/server","--port", "8000", "--service-name", "Magaya_CS_Default", "--connection-string=WATERFALL:6110"
+                "--root", "/server","--port", "8000", "--service-name", "Magaya_CS_Default", "--network-id", "24144","--connection-string=MC-MIA-IMP-10:6110"
             ]
         }
     ]
