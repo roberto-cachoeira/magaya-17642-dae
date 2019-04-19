@@ -52,5 +52,9 @@
 				]
 			}
 		}
-	}
+	},
+	"documentation": [{
+        "title": "Manual DAE - MRN",
+        "url": "/manual/manualDaeMrn.pdf"
+    }]
 }
