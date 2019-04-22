@@ -18,23 +18,31 @@ program.version(packageJson.version)
 const fsReadFile = util.promisify(fs.readFile);
 
 async function getConfiguration() {
-    await checkFolderConfiguration();
-    const configFile = path.join(configFolder, 'config.json');
-    let configJson = "";
-    if (!fs.existsSync(configFile)) {
-        rawData = [{
-            "dae": "",
-            "shipperName": "",
-            "destinationCountry": "",
-            "expDate": ""
-        }];
-        configJson = JSON.parse(rawData);
-    } else {
-        const content = await fsReadFile(configFile, 'utf8');
-        configJson = JSON.parse(content);
+    try {
+        await checkFolderConfiguration();
+        const configFile = path.join(configFolder, 'config.json');
+        let configJson = "";
+        if (!fs.existsSync(configFile)) {
+            rawData = [{
+                "dae": "",
+                "shipperName": "",
+                "destinationCountry": "",
+                "expDate": ""
+            }];
+            configJson = JSON.parse(rawData);
+        } else {
+            
+            const content = await fsReadFile(configFile, 'utf8');
+            console.log("Parsing file" + "\r\n");
+            configJson = await JSON.parse(content);
+            //console.log("Config File : \r\n" + configJson);
+        }
+    
+        return configJson;
+    } catch (error) {
+        console.log("Error Getting the config.json : "+ error+"\r\n");
     }
-
-    return configJson;
+ 
 }
 
 async function checkFolderConfiguration() {
@@ -54,10 +62,11 @@ module.exports = {
     saveConfig: async function (json) {
         try {
             await checkFolderConfiguration();
+            console.log(configFolder);
             fs.writeFileSync(path.join(configFolder, 'config.json'), JSON.stringify(json), 'utf8')
             return true;
         } catch (error) {
-            console.log(error);
+            console.log("Error saving the Config.Json:" + error + "\r\n");
             return false;
         }
 

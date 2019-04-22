@@ -6,77 +6,7 @@ const configuration = require(path.join(__dirname, './configuration'));
 const hyperion = require('@magaya/hyperion-express-middleware').hyperion(process.argv, '17642-dae');
 const networkID = hyperion.dbx ? `${hyperion.dbx.Company.NetworkID}` : 0;
 module.exports = {
-    sendFileSFTP: async function (filePath, fileName) {
-        const BASIC_URL = '/operaciones@gnseas.com';
-        console.log('Starting SFTP');
-        const ftpClient = require("ftp");
-        const path = require('path');
-        var file = path.join(filePath, fileName);
-
-        console.log(file);
-        try {
-            const client = new ftpClient();
-            client.on('ready', function () {
-                console.log('ready');
-                client.cwd(BASIC_URL, function (err) {
-                    if (err) return "Error";
-
-                });
-                client.put(file, fileName, function (err) {
-                    if (err) throw err;
-                    client.end();
-                    return "Success";
-                });
-
-            });
-
-            client.on('connect', function () {
-                console.log('connected');
-
-            });
-            // connect to localhost:21 as anonymous
-            client.connect({
-                host: "ftp.validacarga.com",
-                user: "ricardo@weport.global",
-                password: "123456",
-                port: 21,
-                secure: true,
-                secureOptions: {
-                    rejectUnauthorized: false
-                }
-            });
-        } catch (error) {
-            return error;
-        }
-
-        console.log('Finishing SFTP');
-    },
-    createFile: async function (dbx, algorithm, fs, filePath, fileName) {
-        let content = '900||0000|0|000||\n' +
-            '901||0000||ABC INDIA|000||||0||\n' +
-            '950||09110000AA|KEE|TWN||H|AAAAAAA000000000|\n' +
-            '952||09110000AA|KEE|TWN|2|ZLO|MEX|\n' +
-            '953||09110000AA|KEE|TWN|1|||    |\n' +
-            '953||09110000AA|KEE|TWN|2|DISTRIBUIDORA AAA, S.A.|DAA990909 AA4|CALLE 1 COL. COLONIA MEXICO, DISTRITO FEDERAL, 00000 5555 5555|\n' +
-            '953||09110000AA|KEE|TWN|3|DISTRIBUIDORA AAA, S.A.|DAA990909 AA4|CALLE 1 COL. COLONIA MEXICO, DISTRITO FEDERAL, 00000 5555 5555|\n' +
-            '976||09110000AA|KEE|TWN|1|0|1||1|20000.000|1|MERCANCIA |\n' +
-            '978||09110000AA|KEE|TWN|1|AAAA0000000|2|FCL|20000.000|0000|\n' +
-            '980||09110000AA|KEE|TWN|1|AAAA0000000|000000|\n' +
-            '801|A0000167.322|1|10|\n';
-
-        // write to a new file named 2pac.txt
-        fs.writeFile(filePath + '/' + fileName, content, (err) => {
-            // throws an error, you could also catch it here
-            if (err) {
-                console.log('ERROR!');
-                return false;
-            }
-
-            // success case, the file was saved
-            console.log('File saved!');
-            return true;
-        });
-    },
+    
     findShip: async function (GUID, dbx, algorithm) {
         const list = dbx.Shipping.Shipment.ListByGuid;
 
@@ -213,7 +143,8 @@ module.exports = {
         console.log(data);
         let rawdata = await configuration.getConfig();
         if (rawdata != null) {
-            let config =rawdata;
+           // let config =rawdata;
+            let config = JSON.parse(rawdata);
             config.push(data)
             let dataToSave = JSON.stringify(config, null, 2);
             await configuration.saveConfig(dataToSave);
@@ -249,13 +180,21 @@ module.exports = {
     getConfiguration: async function (shipper, destination, path) {
 
         //let rawdata = await fsReadFile(path + '/config.json');
+        try {
+            console.log("Starting getting config");
         let rawdata = await configuration.getConfig();
         if (rawdata != null) {
             let config = JSON.parse(rawdata);
+
+            //let config = rawdata;
             var result = "";
+            console.log("Looping on all items \r\n");
+            //console.log(config.length);
             for (i in config) {
                 var curObj = config[i];
+                //console.log(curObj);
                 if (curObj.shipperName == shipper && destination == curObj.destinationCountry) {
+                    console.log("Entity found, checking the exp date: "+curObj.shipperName );
                     var d = new Date();
                     var expdate = new Date(curObj.expDate)
                     if (d < expdate)
@@ -263,6 +202,8 @@ module.exports = {
                 }
 
             }
+            if(result=="")
+            console.log("No result");
             console.log(result);
             return result;
         }
@@ -271,6 +212,10 @@ module.exports = {
                 response: "error"
             }
         }
+        } catch (error) {
+            console.log("Error on getting the DAE from Config: "+ error);
+        }
+        
     },
 };
 

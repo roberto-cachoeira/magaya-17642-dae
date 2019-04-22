@@ -102,9 +102,9 @@ app.post(`${program.root}/transactionManager/:guid/customfields`, async (request
 });
 
 app.get(`${program.root}/getConfig/:shipper/:destination`, async (request, response) => {
-    console.log("DAE");
-    console.log("Shipper: " + request.params.shipper);
-    console.log("Destination: " + request.params.destination);
+    console.log("DAE \r\n");
+    console.log("Shipper: " + request.params.shipper +"\r\n");
+    console.log("Destination: " + request.params.destination+"\r\n");
     const result = await ship.getConfiguration(request.params.shipper,request.params.destination,path.join(__dirname, 'static/json'));
     // send the response to the browser
     console.log("Finishing");
