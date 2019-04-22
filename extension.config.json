@@ -3,7 +3,7 @@
 		"company": "magaya",
 		"name": "17642-dae"
 	},
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"minimumMagayaVersion": "11.0.3",
 	"type": "httpServer",
 	"license": "MIT",
@@ -55,6 +55,6 @@
 	},
 	"documentation": [{
         "title": "Manual DAE - MRN",
-        "url": "./manual/manualDaeMrn.pdf"
+        "url": "http://localhost:3691/ext/magaya/17642-dae/manual/manualDaeMrn.pdf"
     }]
 }
