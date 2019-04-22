@@ -1,6 +1,6 @@
 {
   "name": "magaya-17642-dae",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Custom Extension to store DAE number of shippers",
   "main": "index.js",
   "scripts": {
