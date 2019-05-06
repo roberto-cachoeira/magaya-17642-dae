@@ -21,6 +21,7 @@ async function getConfiguration() {
     try {
         await checkFolderConfiguration();
         const configFile = path.join(configFolder, 'config.json');
+        console.log(configFile);
         let configJson = "";
         if (!fs.existsSync(configFile)) {
             rawData = [{
@@ -31,11 +32,7 @@ async function getConfiguration() {
             }];
             configJson = JSON.parse(rawData);
         } else {
-            
-            const content = await fsReadFile(configFile, 'utf8');
-            console.log("Parsing file" + "\r\n");
-            configJson = await JSON.parse(content);
-            //console.log("Config File : \r\n" + configJson);
+            return content = await fsReadFile(configFile);
         }
     
         return configJson;
@@ -63,7 +60,7 @@ module.exports = {
         try {
             await checkFolderConfiguration();
             console.log(configFolder);
-            fs.writeFileSync(path.join(configFolder, 'config.json'), JSON.stringify(json), 'utf8')
+            fs.writeFileSync(path.join(configFolder, 'config.json'), json)
             return true;
         } catch (error) {
             console.log("Error saving the Config.Json:" + error + "\r\n");
